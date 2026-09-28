@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="../YogaSphere.API/YogaSphere.API.csproj" />
+  <Project Path="YogaSphere.Application/YogaSphere.Application.csproj" />
+  <Project Path="YogaSphere.Domain/YogaSphere.Domain.csproj" />
+  <Project Path="YogaSphere.Infrastructure/YogaSphere.Infrastructure.csproj" />
+</Solution>
