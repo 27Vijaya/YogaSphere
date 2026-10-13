@@ -4,7 +4,7 @@ using System.Text;
 
 namespace YogaSphere.Domain.Entities
 {
-    internal class YogaProgram
+    public class YogaProgram
     {
         public int Id { get; set; }
         public int TrainerId { get; set; } //connect program to trainer
