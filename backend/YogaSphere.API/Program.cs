@@ -1,7 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using YogaSphere.Infrastructure.Persistence;
+using YogaSphere.Application.Interfaces.Repositories;
+using YogaSphere.Infrastructure.Repositories;
+using YogaSphere.Application;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddApplication(); //registers application services
 
 // Add services to the container.
 
@@ -14,6 +19,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<YogaSphereDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("YogaSphereConn")));
+
+//It creates one repository instance per HTTP request, which fits the scoped lifetime of YogaSphereDbContext
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
