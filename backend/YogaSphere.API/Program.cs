@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using YogaSphere.Infrastructure.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,6 +11,9 @@ builder.Services.AddControllers();
 
 //Add standard swagger generator
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<YogaSphereDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("YogaSphereConn")));
 
 var app = builder.Build();
 
