@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using YogaSphere.Domain.Entities;
 
 namespace YogaSphere.Infrastructure.Persistence
@@ -30,5 +27,15 @@ namespace YogaSphere.Infrastructure.Persistence
         public DbSet<Review> Reviews => Set<Review>();
 
         public DbSet<Notification> Notifications => Set<Notification>();
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>()
+                .HasIndex(user => user.Email)
+                .IsUnique();
+        }
     }
 }

@@ -10,6 +10,9 @@ using YogaSphere.Application.Interfaces;
 using YogaSphere.Application.Interfaces.Repositories;
 using YogaSphere.Domain.Entities;
 using YogaSphere.Domain.Enums;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using YogaSphere.Application.Exceptions;
 
 namespace YogaSphere.Infrastructure.Services;
 
@@ -55,7 +58,17 @@ public class AuthService : IAuthService
             _passwordHasher.HashPassword(user, request.Password);
 
         await _userRepository.AddAsync(user);
-        await _userRepository.SaveChangesAsync();
+
+        try
+        {
+            await _userRepository.SaveChangesAsync();
+        }
+        catch (DbUpdateException ex) when (
+            ex.InnerException is SqlException sqlException &&
+            (sqlException.Number == 2601 || sqlException.Number == 2627))
+        {
+            throw new DuplicateEmailException();
+        }
 
         return MapUserResponse(user);
     }
@@ -67,17 +80,18 @@ public class AuthService : IAuthService
 
         var user = await _userRepository.GetByEmailAsync(email);
 
-        if (user is null || !user.IsActive)
+        if (user is null ||
+            !user.IsActive ||
+            string.IsNullOrWhiteSpace(user.PasswordHash))
         {
             return null;
         }
 
-        var verificationResult =
-            _passwordHasher.VerifyHashedPassword(
-                user,
-                user.PasswordHash,
-                request.Password);
+        // Verify the submitted password against the stored password hash.
+        var verificationResult = _passwordHasher.VerifyHashedPassword(
+            user, user.PasswordHash, request.Password);
 
+        // Reject invalid passwords without revealing whether the account exists.
         if (verificationResult == PasswordVerificationResult.Failed)
         {
             return null;

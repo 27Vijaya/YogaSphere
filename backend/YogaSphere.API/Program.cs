@@ -74,16 +74,19 @@ builder.Services
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
+            // Reject tokens issued by an unexpected issuer or intended for another audience.
             ValidateIssuer = true,
             ValidIssuer = issuer,
 
             ValidateAudience = true,
             ValidAudience = audience,
 
+            // Ensure the token was signed with our trusted secret key.
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(secretKey)),
 
+            // Reject expired tokens; allow only a small clock difference between servers.
             ValidateLifetime = true,
             ClockSkew = TimeSpan.FromSeconds(30),
 
@@ -105,8 +108,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Authenticate the request before checking its permissions.
 app.UseAuthentication();
 
+// Enforce [Authorize] and role-based access restrictions.s
 app.UseAuthorization();
 
 app.MapControllers();

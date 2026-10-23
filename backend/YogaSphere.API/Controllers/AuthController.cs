@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using YogaSphere.Application.DTOs.Auth;
 using YogaSphere.Application.Interfaces;
+using YogaSphere.Application.Exceptions;
 
 namespace YogaSphere.API.Controllers;
 
@@ -17,17 +18,18 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<UserResponse>> Register(
-        RegisterRequest request)
+    public async Task<ActionResult<UserResponse>> Register(RegisterRequest request)
     {
         try
         {
             var user = await _authService.RegisterAsync(request);
 
+            // Return 201 Created and provide the location of the new user.
             return Created($"/api/Users/{user.Id}", user);
         }
-        catch (InvalidOperationException ex)
+        catch (DuplicateEmailException ex)
         {
+            // A duplicate email is a client conflict, not a server failure.
             return Conflict(new { message = ex.Message });
         }
     }
