@@ -23,8 +23,12 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> GetByEmailAsync(string email)
     {
+        // Normalize the incoming email to avoid casing or whitespace issues.
+        var normalizedEmail = email.Trim().ToLowerInvariant();
+
         return await _context.Users
-            .FirstOrDefaultAsync(user => user.Email == email);
+            .FirstOrDefaultAsync(user =>
+                user.Email.ToLower() == normalizedEmail);
     }
 
     public async Task<List<User>> GetAllAsync()
