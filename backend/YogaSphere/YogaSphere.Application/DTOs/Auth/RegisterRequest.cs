@@ -1,14 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
+using System.ComponentModel.DataAnnotations;
 
-namespace YogaSphere.Application.DTOs.Auth
+namespace YogaSphere.Application.DTOs.Auth;
+
+public class RegisterRequest
 {
-    public class RegisterRequest
-    {
-        public string FirstName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
-    }
+    [Required]
+    [StringLength(100, MinimumLength = 2)]
+    public string FirstName { get; set; } = string.Empty;
+
+    [Required]
+    [StringLength(100, MinimumLength = 2)]
+    public string LastName { get; set; } = string.Empty;
+
+    [Required]
+    [EmailAddress]
+    [StringLength(256)]
+    public string Email { get; set; } = string.Empty;
+
+    [Required]
+    [StringLength(128, MinimumLength = 12)]
+    public string Password { get; set; } = string.Empty;
 }

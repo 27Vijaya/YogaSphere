@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
+using System.ComponentModel.DataAnnotations;
 
-namespace YogaSphere.Application.DTOs.Auth
+namespace YogaSphere.Application.DTOs.Auth;
+
+public class LoginRequest
 {
-    public class LoginRequest
-    {
-        public string Email { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
-    }
+    [Required]
+    [EmailAddress]
+    [StringLength(256)]
+    public string Email { get; set; } = string.Empty;
+
+    [Required]
+    public string Password { get; set; } = string.Empty;
 }

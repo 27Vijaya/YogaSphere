@@ -11,6 +11,6 @@ namespace YogaSphere.Application.Interfaces
         Task<UserResponse> RegisterAsync(RegisterRequest request);
 
         //Verifies credentials and returns login response with access token and user details
-        Task<LoginResponse> LoginAsync(LoginRequest request);
+        Task<LoginResponse?> LoginAsync(LoginRequest request);
     }
 }
