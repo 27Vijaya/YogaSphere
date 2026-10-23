@@ -64,6 +64,33 @@ public class UsersController : ControllerBase
 
 
 
+    [HttpGet("me")]
+    [Authorize]
+    public async Task<ActionResult<UserResponseDto>> GetMyProfile()
+    {
+        // Read the authenticated user's ID from the JWT token.
+        var currentUserId = User.FindFirst(
+            System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+        // Reject requests if the token does not contain a valid user ID.
+        if (!int.TryParse(currentUserId, out var authenticatedUserId))
+        {
+            return Unauthorized();
+        }
+
+        // Fetch only the authenticated user's own record.
+        var user = await _userRepository.GetByIdAsync(authenticatedUserId);
+
+        if (user is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(ToResponseDto(user));
+    }
+
+
+
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<UserResponseDto>> Update(
