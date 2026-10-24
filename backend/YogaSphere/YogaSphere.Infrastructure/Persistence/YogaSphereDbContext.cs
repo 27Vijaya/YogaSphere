@@ -36,6 +36,12 @@ namespace YogaSphere.Infrastructure.Persistence
             modelBuilder.Entity<User>()
                 .HasIndex(user => user.Email)
                 .IsUnique();
+
+            // Configure a one-to-one relationship between User and CustomerProfile.
+            modelBuilder.Entity<CustomerProfile>()
+                .HasOne(profile => profile.User)
+                .WithOne()
+                .HasForeignKey<CustomerProfile>(profile => profile.UserId);
         }
     }
 }

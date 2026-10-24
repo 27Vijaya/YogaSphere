@@ -12,5 +12,8 @@ namespace YogaSphere.Domain.Entities
         public DateTime? DateOfBirth { get; set; }
         public string? Address { get; set; }
         public string? EmergencyContact { get; set; }
+
+        // Navigation property connecting the customer profile to its user account.
+        public User? User { get; set; }
     }
 }

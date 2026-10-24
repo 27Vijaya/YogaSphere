@@ -1,14 +1,15 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
+using Microsoft.Win32;
+using System.Text;
 using YogaSphere.Application;
 using YogaSphere.Application.Interfaces;
 using YogaSphere.Application.Interfaces.Repositories;
 using YogaSphere.Infrastructure.Persistence;
 using YogaSphere.Infrastructure.Repositories;
 using YogaSphere.Infrastructure.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,11 +49,20 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddDbContext<YogaSphereDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("YogaSphereConn")));
 
+//Register repositories and services
+
 //It creates one repository instance per HTTP request, which fits the scoped lifetime of YogaSphereDbContext
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+builder.Services.AddScoped<ICustomerProfileRepository, CustomerProfileRepository>();
+
+//Register customer profile business logic.
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+
+
+// Configure JWT authentication
 var jwtSection = builder.Configuration.GetSection("Jwt");
 
 var issuer = jwtSection["Issuer"];
