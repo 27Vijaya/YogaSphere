@@ -42,6 +42,12 @@ namespace YogaSphere.Infrastructure.Persistence
                 .HasOne(profile => profile.User)
                 .WithOne()
                 .HasForeignKey<CustomerProfile>(profile => profile.UserId);
+
+            // Configure the one-to-one relationship between TrainerProfile and User.
+            modelBuilder.Entity<TrainerProfile>()
+                .HasOne(profile => profile.User)
+                .WithOne()
+                .HasForeignKey<TrainerProfile>(profile => profile.UserId);
         }
     }
 }

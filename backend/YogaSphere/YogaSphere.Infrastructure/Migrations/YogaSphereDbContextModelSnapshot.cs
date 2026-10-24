@@ -78,6 +78,9 @@ namespace YogaSphere.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("CustomerProfiles");
                 });
 
@@ -229,6 +232,9 @@ namespace YogaSphere.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("TrainerProfiles");
                 });
 
@@ -341,6 +347,28 @@ namespace YogaSphere.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("YogaPrograms");
+                });
+
+            modelBuilder.Entity("YogaSphere.Domain.Entities.CustomerProfile", b =>
+                {
+                    b.HasOne("YogaSphere.Domain.Entities.User", "User")
+                        .WithOne()
+                        .HasForeignKey("YogaSphere.Domain.Entities.CustomerProfile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("YogaSphere.Domain.Entities.TrainerProfile", b =>
+                {
+                    b.HasOne("YogaSphere.Domain.Entities.User", "User")
+                        .WithOne()
+                        .HasForeignKey("YogaSphere.Domain.Entities.TrainerProfile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

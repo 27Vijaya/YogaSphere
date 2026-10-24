@@ -61,6 +61,12 @@ builder.Services.AddScoped<ICustomerProfileRepository, CustomerProfileRepository
 //Register customer profile business logic.
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 
+// Register trainer profile database access.
+builder.Services.AddScoped<ITrainerProfileRepository, TrainerProfileRepository>();
+
+// Register trainer profile business logic.
+builder.Services.AddScoped<ITrainerService, TrainerService>();
+
 
 // Configure JWT authentication
 var jwtSection = builder.Configuration.GetSection("Jwt");
@@ -76,7 +82,7 @@ if (string.IsNullOrWhiteSpace(issuer) ||
 {
     throw new InvalidOperationException(
         "JWT configuration is missing or invalid.");
-}
+}   
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
