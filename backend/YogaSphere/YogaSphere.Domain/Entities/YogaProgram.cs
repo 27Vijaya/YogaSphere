@@ -8,6 +8,10 @@ namespace YogaSphere.Domain.Entities
     {
         public int Id { get; set; }
         public int TrainerId { get; set; } //connect program to trainer
+
+        // Navigation property linking the program to its trainer profile.
+        public TrainerProfile? Trainer { get; set; }
+
         public string Name { get; set; } = string.Empty;//program name
         public string? Description { get; set; }
         public int DurationWeeks { get; set; }

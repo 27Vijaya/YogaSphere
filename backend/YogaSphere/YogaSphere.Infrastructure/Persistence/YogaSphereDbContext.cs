@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using YogaSphere.Domain.Entities;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace YogaSphere.Infrastructure.Persistence
 {
@@ -48,6 +49,23 @@ namespace YogaSphere.Infrastructure.Persistence
                 .HasOne(profile => profile.User)
                 .WithOne()
                 .HasForeignKey<TrainerProfile>(profile => profile.UserId);
+
+            // Configure the relationship between a trainer profile and its yoga programs.
+            modelBuilder.Entity<YogaProgram>()
+                .HasOne(program => program.Trainer)
+                .WithMany()
+                .HasForeignKey(program => program.TrainerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure the precision for yoga program prices.
+            modelBuilder.Entity<YogaProgram>()
+                .Property(program => program.Price)
+                .HasPrecision(18, 2);
+
+            // Configure the precision for payment amounts.
+            modelBuilder.Entity<Payment>()
+                .Property(payment => payment.Amount)
+                .HasPrecision(18, 2);
         }
     }
 }

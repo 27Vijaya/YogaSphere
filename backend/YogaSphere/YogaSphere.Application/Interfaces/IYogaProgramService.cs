@@ -17,11 +17,11 @@ namespace YogaSphere.Application.Interfaces
         Task<YogaProgramResponse> CreateAsync(
             int trainerId, CreateYogaProgramRequest request);
 
-        //Updates an existing yoga program for the given trainer
-        Task<YogaProgramResponse> UpdateAsync(
+        // Returns null if the program doesn't exist or belongs to another trainer
+        Task<YogaProgramResponse?> UpdateAsync(
             int trainerId, int programId, UpdateYogaProgramRequest request);
 
-        //request deletion and reports wheather it succeeded
-        Task<bool> DeleteAsync(int id);
+        // Delete a program only if it belongs to the specified trainer.
+        Task<bool> DeleteAsync(int trainerId, int programId);
     }
 }

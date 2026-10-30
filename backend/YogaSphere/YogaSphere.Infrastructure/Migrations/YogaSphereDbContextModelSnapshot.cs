@@ -126,6 +126,7 @@ namespace YogaSphere.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Amount")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("BookingId")
@@ -339,12 +340,15 @@ namespace YogaSphere.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("TrainerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TrainerId");
 
                     b.ToTable("YogaPrograms");
                 });
@@ -369,6 +373,17 @@ namespace YogaSphere.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("YogaSphere.Domain.Entities.YogaProgram", b =>
+                {
+                    b.HasOne("YogaSphere.Domain.Entities.TrainerProfile", "Trainer")
+                        .WithMany()
+                        .HasForeignKey("TrainerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Trainer");
                 });
 #pragma warning restore 612, 618
         }
