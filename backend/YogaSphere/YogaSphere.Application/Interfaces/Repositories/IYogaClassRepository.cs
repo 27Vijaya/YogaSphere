@@ -15,5 +15,7 @@ namespace YogaSphere.Application.Interfaces.Repositories
         Task AddAsync(YogaClass yogaClass);
 
         Task SaveChangesAsync();
+
+        void Delete(YogaClass yogaClass);
     }
 }

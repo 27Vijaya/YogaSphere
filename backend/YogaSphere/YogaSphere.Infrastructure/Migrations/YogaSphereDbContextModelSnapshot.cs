@@ -312,6 +312,8 @@ namespace YogaSphere.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("YogaProgramId");
+
                     b.ToTable("YogaClasses");
                 });
 
@@ -373,6 +375,17 @@ namespace YogaSphere.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("YogaSphere.Domain.Entities.YogaClass", b =>
+                {
+                    b.HasOne("YogaSphere.Domain.Entities.YogaProgram", "YogaProgram")
+                        .WithMany()
+                        .HasForeignKey("YogaProgramId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("YogaProgram");
                 });
 
             modelBuilder.Entity("YogaSphere.Domain.Entities.YogaProgram", b =>

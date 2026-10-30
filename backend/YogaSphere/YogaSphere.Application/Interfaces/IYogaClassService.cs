@@ -1,29 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using YogaSphere.Application.DTOs.YogaClass;
+﻿using YogaSphere.Application.DTOs.YogaClass;
 
-namespace YogaSphere.Application.Interfaces
+namespace YogaSphere.Application.Interfaces;
+
+public interface IYogaClassService
 {
-    public interface IYogaClassService
-    {
-        //Retrives the available yoga classes for a given yoga program
-        Task<IReadOnlyList<YogaClassResponse>> GetByProgramIdAsync(
-       int yogaProgramId);
+    // Retrieve classes belonging to a yoga program.
+    Task<IReadOnlyList<YogaClassResponse>> GetByProgramIdAsync(
+        int trainerId,
+        int yogaProgramId);
 
-        //Retrives a yoga class by its id
-        Task<YogaClassResponse?> GetByIdAsync(int id);
+    // Retrieve a specific class.
+    Task<YogaClassResponse?> GetByIdAsync( int trainerId, int id);
 
-        //Creates a new yoga class for the given yoga program
-        Task<YogaClassResponse> CreateAsync(
-            CreateYogaClassRequest request);
+    // Create a class under a program owned by the trainer.
+    Task<YogaClassResponse> CreateAsync( int trainerId,CreateYogaClassRequest request);
 
-        //Updates an existing yoga class for the given yoga program
-        Task<YogaClassResponse> UpdateAsync(
-            int id,
-            UpdateYogaClassRequest request);
+    // Update a class owned by the trainer.
+    Task<YogaClassResponse?> UpdateAsync(int trainerId, int id, UpdateYogaClassRequest request);
 
-        //request deletion and reports wheather it succeeded
-        Task<bool> DeleteAsync(int id);
-    }
+    // Delete a class owned by the trainer.
+    Task<bool> DeleteAsync(int trainerId, int id);
 }

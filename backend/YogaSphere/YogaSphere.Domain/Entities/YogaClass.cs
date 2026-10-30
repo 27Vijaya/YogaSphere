@@ -8,6 +8,10 @@ namespace YogaSphere.Domain.Entities
     {
         public int Id { get; set; }
         public int YogaProgramId { get; set; }
+
+        // Navigation property linking this class to its yoga program.
+        public YogaProgram? YogaProgram { get; set; }
+
         public string Name { get; set; } = string.Empty;//name is required
         public string? Description { get; set; }//description is optional
         public int DurationMinutes { get; set; }

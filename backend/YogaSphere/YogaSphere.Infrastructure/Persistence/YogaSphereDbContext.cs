@@ -66,6 +66,13 @@ namespace YogaSphere.Infrastructure.Persistence
             modelBuilder.Entity<Payment>()
                 .Property(payment => payment.Amount)
                 .HasPrecision(18, 2);
+
+            // Configure the relationship between a yoga program and its classes.
+            modelBuilder.Entity<YogaClass>()
+                .HasOne(yogaClass => yogaClass.YogaProgram)
+                .WithMany()
+                .HasForeignKey(yogaClass => yogaClass.YogaProgramId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
