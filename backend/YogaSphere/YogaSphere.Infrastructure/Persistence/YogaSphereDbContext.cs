@@ -73,6 +73,13 @@ namespace YogaSphere.Infrastructure.Persistence
                 .WithMany()
                 .HasForeignKey(yogaClass => yogaClass.YogaProgramId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure the relationship between a yoga class and its schedules.
+            modelBuilder.Entity<Schedule>()
+                .HasOne(schedule => schedule.YogaClass)
+                .WithMany()
+                .HasForeignKey(schedule => schedule.YogaClassId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

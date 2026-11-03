@@ -79,6 +79,12 @@ builder.Services.AddScoped<IYogaClassRepository,    YogaClassRepository>();
 // Register yoga class business logic.
 builder.Services.AddScoped<IYogaClassService, YogaClassService>();
 
+// Register schedule database access.
+builder.Services.AddScoped<IScheduleRepository,ScheduleRepository>();
+
+// Register schedule business logic.
+builder.Services.AddScoped<IScheduleService,ScheduleService>();
+
 
 // Configure JWT authentication
 var jwtSection = builder.Configuration.GetSection("Jwt");

@@ -1,29 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using YogaSphere.Application.DTOs.Schedule;
+﻿using YogaSphere.Application.DTOs.Schedule;
 
-namespace YogaSphere.Application.Interfaces
+namespace YogaSphere.Application.Interfaces;
+
+public interface IScheduleService
 {
-    internal interface IScheduleService
-    {
-        //Retrives the available schedules for a given yoga class
-        Task<IReadOnlyList<ScheduleResponse>> GetByYogaClassIdAsync(
-        int yogaClassId);
+    // Retrieve schedules belonging to a trainer's yoga class.
+    Task<IReadOnlyList<ScheduleResponse>> GetByYogaClassIdAsync(int trainerId, int yogaClassId);
 
-        //Retrives a schedule by its id
-        Task<ScheduleResponse?> GetByIdAsync(int id);
+    // Retrieve a schedule by its ID.
+    Task<ScheduleResponse?> GetByIdAsync(int trainerId, int id);
 
-        //Creates a new schedule for the given yoga class
-        Task<ScheduleResponse> CreateAsync(
-            CreateScheduleRequest request);
+    // Create a schedule under a class owned by the trainer.
+    Task<ScheduleResponse> CreateAsync(int trainerId, CreateScheduleRequest request);
 
-        //Updates an existing schedule for the given yoga class
-        Task<ScheduleResponse> UpdateAsync(
-            int id,
-            UpdateScheduleRequest request);
+    // Update a schedule owned by the trainer.
+    Task<ScheduleResponse?> UpdateAsync( int trainerId,int id,UpdateScheduleRequest request);
 
-        //request deletion and reports wheather it succeeded
-        Task<bool> DeleteAsync(int id);
-    }
+    // Delete a schedule owned by the trainer.
+    Task<bool> DeleteAsync(int trainerId, int id);
 }

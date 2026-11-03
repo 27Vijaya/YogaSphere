@@ -23,5 +23,7 @@ namespace YogaSphere.Application.Interfaces.Repositories
             int? excludeScheduleId = null);
 
         Task SaveChangesAsync();
+
+        void Delete(Schedule schedule);
     }
 }
