@@ -85,6 +85,12 @@ builder.Services.AddScoped<IScheduleRepository,ScheduleRepository>();
 // Register schedule business logic.
 builder.Services.AddScoped<IScheduleService,ScheduleService>();
 
+// Register booking database operations.
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+
+// Register booking business logic.
+builder.Services.AddScoped<IBookingService, BookingService>();
+
 
 // Configure JWT authentication
 var jwtSection = builder.Configuration.GetSection("Jwt");

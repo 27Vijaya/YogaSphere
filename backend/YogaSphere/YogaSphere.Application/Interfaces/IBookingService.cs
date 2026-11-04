@@ -20,11 +20,6 @@ namespace YogaSphere.Application.Interfaces
             int customerId,
             CreateBookingRequest request);
 
-        //changes the booking status when an authorized operation permits it
-        Task<BookingResponse> UpdateStatusAsync(
-            int id,
-            BookingStatus status);
-
         //cancels a booking for the specified customer
         Task<bool> CancelAsync(int id, int customerId);
     }

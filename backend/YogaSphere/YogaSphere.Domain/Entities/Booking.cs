@@ -14,5 +14,7 @@ namespace YogaSphere.Domain.Entities
         public DateTime BookingDate { get; set; }
         public DateTime? CancelledAt { get; set; }
         public DateTime CreatedAt { get; set; }
+        public CustomerProfile? Customer { get; set; }
+        public Schedule? Schedule { get; set; }
     }
 }

@@ -80,6 +80,20 @@ namespace YogaSphere.Infrastructure.Persistence
                 .WithMany()
                 .HasForeignKey(schedule => schedule.YogaClassId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure the relationship between a booking and a customer profile.
+            modelBuilder.Entity<Booking>()
+                .HasOne(booking => booking.Customer)
+                .WithMany()
+                .HasForeignKey(booking => booking.CustomerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure the relationship between a booking and a schedule.
+            modelBuilder.Entity<Booking>()
+                .HasOne(booking => booking.Schedule)
+                .WithMany()
+                .HasForeignKey(booking => booking.ScheduleId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

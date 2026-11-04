@@ -50,6 +50,10 @@ namespace YogaSphere.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ScheduleId");
+
                     b.ToTable("Bookings");
                 });
 
@@ -355,6 +359,25 @@ namespace YogaSphere.Infrastructure.Migrations
                     b.HasIndex("TrainerId");
 
                     b.ToTable("YogaPrograms");
+                });
+
+            modelBuilder.Entity("YogaSphere.Domain.Entities.Booking", b =>
+                {
+                    b.HasOne("YogaSphere.Domain.Entities.CustomerProfile", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("YogaSphere.Domain.Entities.Schedule", "Schedule")
+                        .WithMany()
+                        .HasForeignKey("ScheduleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Schedule");
                 });
 
             modelBuilder.Entity("YogaSphere.Domain.Entities.CustomerProfile", b =>
