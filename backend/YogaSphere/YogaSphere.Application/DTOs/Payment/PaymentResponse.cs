@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using YogaSphere.Domain.Enums;
+﻿using YogaSphere.Domain.Enums;
 
 namespace YogaSphere.Application.DTOs.Payment
 {
@@ -14,6 +11,6 @@ namespace YogaSphere.Application.DTOs.Payment
         public PaymentStatus PaymentStatus { get; set; }
         public string? TransactionId { get; set; }
         public DateTime? PaidAt { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
     }
 }

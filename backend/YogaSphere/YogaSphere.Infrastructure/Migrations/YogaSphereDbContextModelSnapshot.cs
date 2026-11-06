@@ -153,6 +153,8 @@ namespace YogaSphere.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BookingId");
+
                     b.ToTable("Payments");
                 });
 
@@ -389,6 +391,17 @@ namespace YogaSphere.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("YogaSphere.Domain.Entities.Payment", b =>
+                {
+                    b.HasOne("YogaSphere.Domain.Entities.Booking", "Booking")
+                        .WithMany()
+                        .HasForeignKey("BookingId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Booking");
                 });
 
             modelBuilder.Entity("YogaSphere.Domain.Entities.Schedule", b =>

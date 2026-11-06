@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using YogaSphere.Application.DTOs.Payment;
+﻿using YogaSphere.Application.DTOs.Payment;
 
 namespace YogaSphere.Application.Interfaces
 {
     public interface IPaymentService
     {
-        //starts the payment process for a customer's booking.
-        Task<PaymentInitiationResponse> InitiateAsync(
-        int customerId,
-        CreatePaymentRequest request);
+        // Starts the payment process for a customer's booking.
+        Task<PaymentInitiationResponse> InitiateAsync(int customerId,CreatePaymentRequest request);
 
-        //retrieves a payment by its ID
-        Task<PaymentResponse?> GetByIdAsync(int paymentId);
+        // Retrieves a payment only if it belongs to the customer.
+        Task<PaymentResponse?> GetByIdAsync(int customerId,int paymentId);
 
-        //retrieves payment records associated with a booking.
-        Task<IReadOnlyList<PaymentResponse>> GetByBookingIdAsync(
-            int bookingId);
+        // Retrieves payment records only for the customer's booking.
+        Task<IReadOnlyList<PaymentResponse>> GetByBookingIdAsync(int customerId,int bookingId);
     }
 }

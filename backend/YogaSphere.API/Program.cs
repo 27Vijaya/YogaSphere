@@ -57,39 +57,25 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddScoped<ICustomerProfileRepository, CustomerProfileRepository>();
-
-//Register customer profile business logic.
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 
-// Register trainer profile database access.
 builder.Services.AddScoped<ITrainerProfileRepository, TrainerProfileRepository>();
-
-// Register trainer profile business logic.
 builder.Services.AddScoped<ITrainerService, TrainerService>();
 
-// Register yoga program database access.
 builder.Services.AddScoped<IYogaProgramRepository, YogaProgramRepository>();
-
-// Register yoga program business logic.
 builder.Services.AddScoped<IYogaProgramService, YogaProgramService>();
 
-// Register yoga class database access.
-builder.Services.AddScoped<IYogaClassRepository,    YogaClassRepository>();
-
-// Register yoga class business logic.
+builder.Services.AddScoped<IYogaClassRepository, YogaClassRepository>();
 builder.Services.AddScoped<IYogaClassService, YogaClassService>();
 
-// Register schedule database access.
 builder.Services.AddScoped<IScheduleRepository,ScheduleRepository>();
-
-// Register schedule business logic.
 builder.Services.AddScoped<IScheduleService,ScheduleService>();
 
-// Register booking database operations.
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
-
-// Register booking business logic.
 builder.Services.AddScoped<IBookingService, BookingService>();
+
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 
 // Configure JWT authentication

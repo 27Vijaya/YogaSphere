@@ -16,5 +16,6 @@ namespace YogaSphere.Domain.Entities
         public string? TransactionId { get; set; }//provided by payment gateway(Razorpay)
         public DateTime? PaidAt { get; set; }
         public DateTime? CreatedAt { get; set; }
+        public Booking? Booking { get; set; }
     }
 }

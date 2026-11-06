@@ -115,7 +115,8 @@ namespace YogaSphere.Infrastructure.Services
             {
                 CustomerId = customer.Id,
                 ScheduleId = schedule.Id,
-                Status = BookingStatus.Confirmed,
+                // A booking is confirmed only after successful payment.
+                Status = BookingStatus.Pending,
                 BookingDate = now,
                 CreatedAt = now
             };

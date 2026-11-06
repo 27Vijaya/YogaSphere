@@ -94,6 +94,13 @@ namespace YogaSphere.Infrastructure.Persistence
                 .WithMany()
                 .HasForeignKey(booking => booking.ScheduleId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure the relationship between a payment and its booking.
+            modelBuilder.Entity<Payment>()
+                .HasOne(payment => payment.Booking)
+                .WithMany()
+                .HasForeignKey(payment => payment.BookingId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
