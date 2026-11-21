@@ -1,0 +1,52 @@
+/* Dashboard overview content */
+.dashboard-overview h2 {
+  color: #245c46;
+  margin-bottom: 10px;
+}
+
+.dashboard-overview > p {
+  color: #66736c;
+  margin-bottom: 25px;
+}
+
+/* Summary cards */
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.dashboard-card {
+  background-color: #f5f7f6;
+  border: 1px solid #e1e9e4;
+  border-radius: 10px;
+  padding: 22px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-card h3 {
+  color: #245c46;
+  margin-bottom: 10px;
+}
+
+.dashboard-card p {
+  color: #66736c;
+}
+
+/* Responsive cards */
+@media (max-width: 900px) {
+  .dashboard-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-cards {
+    grid-template-columns: 1fr;
+  }
+}

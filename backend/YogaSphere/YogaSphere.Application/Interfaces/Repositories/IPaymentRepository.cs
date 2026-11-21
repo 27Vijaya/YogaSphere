@@ -9,11 +9,13 @@ namespace YogaSphere.Application.Interfaces.Repositories
     {
         Task<Payment?> GetByIdAsync(int paymentId);
 
+        Task<Payment?> GetByGatewayOrderIdAsync(string gatewayOrderId);
         Task<IReadOnlyList<Payment>> GetByBookingIdAsync(
             int bookingId);
 
         Task AddAsync(Payment payment);
 
         Task SaveChangesAsync();
+
     }
 }

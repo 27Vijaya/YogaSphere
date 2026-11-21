@@ -12,5 +12,7 @@ namespace YogaSphere.Application.Interfaces
 
         // Retrieves payment records only for the customer's booking.
         Task<IReadOnlyList<PaymentResponse>> GetByBookingIdAsync(int customerId,int bookingId);
+
+        Task<PaymentResponse?> VerifyPaymentAsync(int customerId,VerifyPaymentRequest request);
     }
 }

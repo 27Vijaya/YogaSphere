@@ -22,6 +22,16 @@ namespace YogaSphere.Infrastructure.Repositories
                 .FirstOrDefaultAsync(payment => payment.Id == paymentId);
         }
 
+        // Retrieves a payment using its Razorpay order ID.
+        // Tracking is enabled because webhook processing may update its status.
+        public async Task<Payment?> GetByGatewayOrderIdAsync(
+            string gatewayOrderId)
+        {
+            return await _context.Payments
+                .Include(payment => payment.Booking)
+                .FirstOrDefaultAsync(payment => payment.GatewayOrderId == gatewayOrderId);
+        }
+
         // Retrieves all payment attempts associated with a booking.
         public async Task<IReadOnlyList<Payment>> GetByBookingIdAsync(
             int bookingId)

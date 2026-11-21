@@ -1,0 +1,268 @@
+
+/* =================================
+   1. GLOBAL STYLES
+================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f7f6;
+  color: #26332d;
+}
+
+/* =================================
+   2. NAVIGATION BAR - DESKTOP
+================================= */
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #245c46;
+  color: white;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+nav h2 {
+  font-size: 24px;
+}
+
+nav div {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #c8e6c9;
+}
+
+/* =================================
+   3. COMMON PAGE CONTAINER
+================================= */
+
+.page-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+h1 {
+  margin-bottom: 15px;
+}
+
+/* =================================
+   4. TABLET RESPONSIVE STYLES
+================================= */
+
+@media (max-width: 768px) {
+
+  /* Navigation */
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 18px 20px;
+  }
+
+  nav div {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  /* Page content */
+  .page-container {
+    padding: 30px 20px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+}
+
+/* =================================
+   5. MOBILE RESPONSIVE STYLES
+================================= */
+
+@media (max-width: 480px) {
+
+  /* Navigation */
+  nav {
+    padding: 16px;
+  }
+
+  nav h2 {
+    font-size: 21px;
+  }
+
+  nav div {
+    gap: 12px;
+  }
+
+  nav a {
+    font-size: 14px;
+  }
+
+  /* Page content */
+  .page-container {
+    padding: 24px 16px;
+  }
+
+  h1 {
+    font-size: 23px;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+   .auth-container {
+    padding: 22px 18px;
+    margin: 10px auto;
+  }
+
+  .auth-container h1 {
+    font-size: 22px;
+  }
+}
+
+/* =================================
+   6. AUTHENTICATION FORMS
+================================= */
+
+.auth-container {
+  width: 100%;
+  max-width: 480px;
+  margin: 20px auto;
+  padding: 32px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.auth-container h1 {
+  color: #245c46;
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.auth-container p {
+  color: #66736c;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+/* Form fields */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1dcd5;
+  border-radius: 6px;
+  font-size: 15px;
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: #245c46;
+  box-shadow: 0 0 0 2px rgba(36, 92, 70, 0.12);
+}
+
+/* Submit button */
+.auth-button {
+  width: 100%;
+  padding: 13px;
+  background-color: #245c46;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.auth-button:hover {
+  background-color: #194532;
+}
+
+/* Login and registration navigation links */
+.auth-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.auth-link a {
+  color: #245c46;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-link a:hover {
+  text-decoration: underline;
+}
+
+/* Registration feedback messages */
+.error-message {
+  color: #b42318;
+  background-color: #fef3f2;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+.success-message {
+  color: #245c46;
+  background-color: #e8f5e9;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+.auth-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+
+/* Navbar logout button */
+.nav-button {
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: #194532;
+}

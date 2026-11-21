@@ -9,7 +9,7 @@ namespace YogaSphere.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = "Trainer")]
+[Authorize]
 public class YogaProgramController : ControllerBase
 {
     private readonly IYogaProgramService _yogaProgramService;
@@ -42,6 +42,7 @@ public class YogaProgramController : ControllerBase
     }
 
     // Create a yoga program for the authenticated trainer.
+    [Authorize(Roles = "Trainer,Admin")]
     [HttpPost]
     public async Task<ActionResult<YogaProgramResponse>> Create(
         [FromBody] CreateYogaProgramRequest request)
@@ -62,6 +63,7 @@ public class YogaProgramController : ControllerBase
     }
 
     // Update only a program owned by the authenticated trainer.
+    [Authorize(Roles = "Trainer,Admin")]
     [HttpPut("{id:int}")]
     public async Task<ActionResult<YogaProgramResponse>> Update(
         int id,
@@ -87,6 +89,7 @@ public class YogaProgramController : ControllerBase
     }
 
     // Delete only a program owned by the authenticated trainer.
+    [Authorize(Roles = "Trainer,Admin")]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {

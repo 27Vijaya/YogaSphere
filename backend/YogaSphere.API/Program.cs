@@ -2,16 +2,21 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
-using Microsoft.Win32;
 using System.Text;
 using YogaSphere.Application;
 using YogaSphere.Application.Interfaces;
 using YogaSphere.Application.Interfaces.Repositories;
+using YogaSphere.Infrastructure.Configuration;
 using YogaSphere.Infrastructure.Persistence;
 using YogaSphere.Infrastructure.Repositories;
 using YogaSphere.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+// Bind Razorpay credentials from configuration and User Secrets.
+builder.Services.Configure<RazorpaySettings>(
+    builder.Configuration.GetSection("Razorpay"));
 
 builder.Services.AddApplication(); //registers application services
 
@@ -75,7 +80,12 @@ builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddScoped<IBookingService, BookingService>();
 
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IWebhookEventRepository, WebhookEventRepository>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+
+// Register Razorpay integration with HttpClient.
+builder.Services.AddHttpClient<IRazorpayService, RazorpayService>();
+builder.Services.AddScoped<IRazorpayWebhookService, RazorpayWebhookService>();
 
 
 // Configure JWT authentication
@@ -121,7 +131,23 @@ builder.Services
         };
     });
 
+
+// Configure CORS to allow requests from the React frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ReactFrontend", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
+
+// Enable CORS for the React frontend
+app.UseCors("ReactFrontend");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

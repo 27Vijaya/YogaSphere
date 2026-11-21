@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using YogaSphere.Domain.Entities;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace YogaSphere.Infrastructure.Persistence
 {
@@ -25,6 +24,8 @@ namespace YogaSphere.Infrastructure.Persistence
 
         public DbSet<Payment> Payments => Set<Payment>();
 
+        public DbSet<WebhookEvent> WebhookEvents => Set<WebhookEvent>();
+
         public DbSet<Review> Reviews => Set<Review>();
 
         public DbSet<Notification> Notifications => Set<Notification>();
@@ -36,6 +37,11 @@ namespace YogaSphere.Infrastructure.Persistence
 
             modelBuilder.Entity<User>()
                 .HasIndex(user => user.Email)
+                .IsUnique();
+
+            // Prevent the same Razorpay webhook event from being stored twice.
+            modelBuilder.Entity<WebhookEvent>()
+                .HasIndex(webhookEvent => webhookEvent.EventId)
                 .IsUnique();
 
             // Configure a one-to-one relationship between User and CustomerProfile.

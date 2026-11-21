@@ -139,6 +139,9 @@ namespace YogaSphere.Infrastructure.Migrations
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("GatewayOrderId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("PaidAt")
                         .HasColumnType("datetime2");
 
@@ -286,6 +289,33 @@ namespace YogaSphere.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("YogaSphere.Domain.Entities.WebhookEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("EventId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("EventType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ProcessedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId")
+                        .IsUnique();
+
+                    b.ToTable("WebhookEvents");
                 });
 
             modelBuilder.Entity("YogaSphere.Domain.Entities.YogaClass", b =>

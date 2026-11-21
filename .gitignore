@@ -361,3 +361,21 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Node.js dependencies and build output
+node_modules/
+dist/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# ASP.NET Core build output
+bin/
+obj/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo

@@ -38,6 +38,30 @@ namespace YogaSphere.API.Controllers
             }
         }
 
+        // Verifies Razorpay payment and updates the booking after successful verification.
+        [HttpPost("verify")]
+        public async Task<IActionResult> VerifyPayment(
+            [FromBody] VerifyPaymentRequest request)
+        {
+            try
+            {
+                var customerId = GetCustomerId();
+
+                var result = await _paymentService.VerifyPaymentAsync(
+                    customerId,
+                    request);
+
+                if (result == null)
+                    return NotFound(new { message = "Payment not found." });
+
+                return Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         // Retrieves a payment belonging to the authenticated customer.
         [HttpGet("{paymentId:int}")]
         public async Task<IActionResult> GetById(int paymentId)
