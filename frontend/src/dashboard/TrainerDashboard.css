@@ -1,0 +1,161 @@
+
+/* Main dashboard layout */
+.trainer-dashboard {
+  display: flex;
+  min-height: calc(100vh - 70px);
+  background: #f4f7f6;
+}
+
+/* Sidebar */
+.trainer-sidebar {
+  width: 255px;
+  min-width: 255px;
+  padding: 26px 18px;
+  display: flex;
+  flex-direction: column;
+  background: #123c3a;
+  color: #ffffff;
+}
+
+/* Brand section */
+.trainer-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 8px 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.trainer-brand-icon {
+  width: 43px;
+  height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #d0eee1;
+  color: #123c3a;
+}
+
+.trainer-brand h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.trainer-brand span {
+  display: block;
+  margin-top: 4px;
+  color: #b8d1cc;
+  font-size: 11px;
+}
+
+/* Menu label */
+.trainer-menu-label {
+  margin: 30px 10px 13px;
+  color: #9bbab3;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+/* Navigation */
+.trainer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.trainer-nav a {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px 14px;
+  border-radius: 9px;
+  color: #d2e3df;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.trainer-nav a:hover {
+  background: rgba(255, 255, 255, 0.09);
+  color: #ffffff;
+}
+
+.trainer-nav a.active {
+  background: #d0eee1;
+  color: #123c3a;
+  font-weight: 700;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* Sidebar footer */
+.trainer-sidebar-footer {
+  margin-top: auto;
+  padding: 20px 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.trainer-sidebar-footer span {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.trainer-sidebar-footer small {
+  color: #9bbab3;
+  font-size: 11px;
+}
+
+/* Main content */
+.trainer-content {
+  flex: 1;
+  min-width: 0;
+  padding: 32px;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .trainer-dashboard {
+    flex-direction: column;
+  }
+
+  .trainer-sidebar {
+    width: auto;
+    min-width: 0;
+    padding: 18px;
+  }
+
+  .trainer-brand {
+    padding-bottom: 16px;
+  }
+
+  .trainer-menu-label {
+    margin-top: 18px;
+  }
+
+  .trainer-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .trainer-nav a {
+    flex: 1;
+    min-width: 125px;
+  }
+
+  .trainer-content {
+    padding: 20px 16px;
+  }
+}
+
+@media (max-width: 420px) {
+  .trainer-nav {
+    flex-direction: column;
+  }
+}

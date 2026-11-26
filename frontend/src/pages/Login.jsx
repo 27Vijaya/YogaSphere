@@ -1,8 +1,7 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import request from "../services/api";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 
 function Login() {
   const navigate = useNavigate();
@@ -42,7 +41,24 @@ function Login() {
       // Update central authentication state
       login(data.accessToken, data.user);
 
-      navigate("/");
+     switch (data.user.role) {
+  case "Trainer":
+    navigate("/trainer", { replace: true });
+    break;
+
+  case "Admin":
+    navigate("/admin", { replace: true });
+    break;
+
+  case "Customer":
+    navigate("/dashboard", { replace: true });
+    break;
+
+  default:
+    setError("Your account role is not recognized.");
+    break;
+}
+
     } catch (err) {
       setError(err.message);
     } finally {

@@ -1,0 +1,122 @@
+
+/* =================================
+   YOGASPHERE - MAIN NAVIGATION
+================================= */
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #245c46;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.navbar {
+  min-height: 70px;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.navbar-brand {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.navbar-links a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 15px;
+  transition: color 0.2s ease;
+}
+
+.navbar-links a:hover,
+.navbar-links a.active {
+  color: #d0eee1;
+}
+
+.navbar-welcome {
+  color: #ffffff;
+  font-size: 15px;
+}
+
+.nav-button {
+  padding: 10px 20px;
+  color: #ffffff;
+  background: transparent;
+  border: 1px solid #d0eee1;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.nav-button:hover {
+  color: #123c3a;
+  background: #d0eee1;
+}
+
+.navbar-menu-toggle {
+  display: none;
+  color: #ffffff;
+  background: transparent;
+  border: none;
+  font-size: 27px;
+  cursor: pointer;
+}
+
+/* Mobile navigation */
+@media (max-width: 768px) {
+  .navbar {
+    min-height: 65px;
+    padding: 0 18px;
+  }
+
+  .navbar-brand {
+    font-size: 22px;
+  }
+
+  .navbar-menu-toggle {
+    display: block;
+  }
+
+  .navbar-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 18px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    background: #123c3a;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .navbar-links.menu-open {
+    display: flex;
+  }
+
+  .navbar-links a {
+    padding: 8px 5px;
+  }
+
+  .navbar-welcome {
+    padding: 8px 5px;
+  }
+
+  .nav-button {
+    align-self: flex-start;
+  }
+}

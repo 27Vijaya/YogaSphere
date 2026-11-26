@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using YogaSphere.Application.DTOs.YogaProgram;
+using YogaSphere.Domain.Entities;
 
 namespace YogaSphere.Application.Interfaces
 {
@@ -9,6 +10,8 @@ namespace YogaSphere.Application.Interfaces
     {
         //Retrives the available yoga programs
         Task<IReadOnlyList<YogaProgramResponse>> GetAllAsync();
+
+        Task<IReadOnlyList<YogaProgramResponse>> GetMyProgramsAsync(int trainerId);
 
         //Retrives a yoga program by its id
         Task<YogaProgramResponse?> GetByIdAsync(int id);

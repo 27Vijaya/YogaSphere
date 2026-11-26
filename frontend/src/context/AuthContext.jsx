@@ -1,28 +1,28 @@
+import { useState } from "react";
+import { AuthContext } from "./AuthContext.js";
 
-import { createContext, useContext, useState } from "react";
-
-// Create the authentication context
-const AuthContext = createContext(null);
-
-// Provide authentication information to the application
 export function AuthProvider({ children }) {
-  // Read the existing token when the application starts
   const [token, setToken] = useState(
     () => localStorage.getItem("accessToken")
   );
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
 
-  // Save login information
   function login(accessToken, userData) {
     localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("user", JSON.stringify(userData));
+
     setToken(accessToken);
     setUser(userData);
   }
 
-  // Clear login information
   function logout() {
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("user");
+
     setToken(null);
     setUser(null);
   }
@@ -41,9 +41,4 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
-}
-
-// Custom hook to access authentication information
-export function useAuth() {
-  return useContext(AuthContext);
 }

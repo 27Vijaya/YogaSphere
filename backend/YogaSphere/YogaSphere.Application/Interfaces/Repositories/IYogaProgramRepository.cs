@@ -10,6 +10,8 @@ namespace YogaSphere.Application.Interfaces.Repositories
 
         Task<IReadOnlyList<YogaProgram>> GetAllAsync();
 
+        Task<IReadOnlyList<YogaProgram>> GetByTrainerIdAsync(int trainerId);
+
         Task<YogaProgram?> GetByIdAsync(int id);
 
         Task AddAsync(YogaProgram program);

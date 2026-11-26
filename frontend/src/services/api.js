@@ -29,20 +29,47 @@ async function request(endpoint, options = {}) {
   // Read the API response
   const data = await response.json().catch(() => null);
 
-  // Handle unsuccessful responses
- if (!response.ok) {
-  console.error("API Error:", {
-    endpoint,
-    status: response.status,
-    response: data,
-  });
+  // Identify the login request.
+  const isLoginRequest = endpoint.toLowerCase() === "/auth/login";
 
-  throw new Error(
-    data?.message ||
-    data?.title ||
-    `Request failed with status ${response.status}`
-  );
-}
+  // Handle unsuccessful login separately from expired sessions.
+  if (response.status === 401 && isLoginRequest) {
+    throw new Error(
+      data?.message ||
+      data?.detail ||
+      data?.title ||
+      "Invalid email or password."
+    );
+  }
+
+  // Handle expired or invalid authentication on protected requests.
+  if (response.status === 401) {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("user");
+
+    // Redirect to login unless already on that page.
+    if (window.location.pathname !== "/login") {
+      window.location.href = "/login";
+    }
+
+    throw new Error("Your session has expired. Please log in again.");
+  }
+
+  // Handle other unsuccessful responses.
+  if (!response.ok) {
+    console.error("API Error:", {
+      endpoint,
+      status: response.status,
+      response: data,
+    });
+
+    throw new Error(
+      data?.message ||
+      data?.detail ||
+      data?.title ||
+      `Request failed with status ${response.status}`
+    );
+  }
 
   return data;
 }

@@ -23,6 +23,15 @@ public class YogaProgramRepository : IYogaProgramRepository
             .ToListAsync();
     }
 
+    // Retrieve yoga programs belonging to a specific trainer.
+    public async Task<IReadOnlyList<YogaProgram>> GetByTrainerIdAsync(int trainerId)
+    {
+        return await _context.YogaPrograms
+            .AsNoTracking()
+            .Where(program => program.TrainerId == trainerId)
+            .ToListAsync();
+    }
+
     // Retrieve one yoga program by its ID.
     public async Task<YogaProgram?> GetByIdAsync(int id)
     {

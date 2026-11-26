@@ -15,6 +15,10 @@ import DashboardPrograms from "./dashboard/DashboardPrograms";
 import DashboardClasses from "./dashboard/DashboardClasses";
 import DashboardBookings from "./dashboard/DashboardBookings";
 
+import TrainerDashboard from "./dashboard/TrainerDashboard";
+import TrainerOverview from "./dashboard/TrainerOverview";
+import TrainerClasses from "./dashboard/TrainerClasses";
+
 function App() {
   return (
     <BrowserRouter>
@@ -35,7 +39,7 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["Customer"]}>
               <DashboardLayout />
             </ProtectedRoute>
           }
@@ -44,9 +48,23 @@ function App() {
           <Route index element={<DashboardOverview />} />
 
           <Route path="profile" element={<DashboardProfile />} />
-          <Route path="program" element={<DashboardPrograms/>} />
-          <Route path="classes" element={<DashboardClasses/>} />
-          <Route path="bookings" element={<DashboardBookings/>}/>
+          <Route path="program" element={<DashboardPrograms />} />
+          <Route path="classes/:programId" element={<DashboardClasses />} />
+          <Route path="bookings" element={<DashboardBookings />} />
+        </Route>
+
+        {/* Trainer dashboard and its nested pages */}
+        <Route
+          path="/trainer"
+          element={
+            <ProtectedRoute allowedRoles={["Trainer"]}>
+              <TrainerDashboard />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<TrainerOverview />} />
+          <Route path="classes" element={<TrainerClasses />} />
+          <Route path="schedules" element={<h2>My Schedules</h2>} />
         </Route>
 
         {/* Public pages - accessible only when logged out */}

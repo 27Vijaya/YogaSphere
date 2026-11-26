@@ -1,0 +1,83 @@
+
+/* =================================
+   YOGASPHERE - CUSTOMER PROFILE
+================================= */
+
+.dashboard-profile {
+  width: 100%;
+}
+
+.dashboard-profile h2 {
+  margin: 0 0 8px;
+  color: #173b38;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.dashboard-profile > p {
+  margin-bottom: 28px;
+  color: #66736c;
+  font-size: 15px;
+}
+
+/* Profile information card */
+.profile-details {
+  max-width: 750px;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #e0e9e6;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(18, 60, 58, 0.04);
+}
+
+.profile-details p {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 17px 5px;
+  border-bottom: 1px solid #edf1ef;
+  color: #53635e;
+  font-size: 15px;
+}
+
+.profile-details p:last-child {
+  border-bottom: none;
+}
+
+.profile-details strong {
+  min-width: 125px;
+  color: #173b38;
+  font-weight: 600;
+}
+
+/* Loading, error and empty states */
+.profile-message {
+  padding: 18px;
+  color: #53635e;
+  background: #f4f7f6;
+  border-radius: 10px;
+}
+
+.error-message {
+  padding: 14px 16px;
+  color: #a52a2a;
+  background: #fff0f0;
+  border: 1px solid #f2cccc;
+  border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+  .profile-details {
+    padding: 18px;
+  }
+
+  .profile-details p {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .profile-details strong {
+    min-width: 0;
+  }
+}

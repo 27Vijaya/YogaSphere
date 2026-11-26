@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import request from "../services/api";
 import "./DashboardPrograms.css";
 
@@ -7,6 +8,7 @@ function DashboardPrograms() {
   const [programs, setPrograms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   // Fetch yoga programs from the backend
   useEffect(() => {
@@ -67,6 +69,10 @@ function DashboardPrograms() {
                   <strong>Price:</strong> ₹{Number(program.price).toLocaleString("en-IN")}
                 </p>
               </div>
+
+              <button type="button" onClick={()=>navigate(`/dashboard/classes/${program.id}`)}>
+                View Classes
+              </button>
             </article>
           ))}
         </div>

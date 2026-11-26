@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using YogaSphere.Application.DTOs.YogaClass;
@@ -18,51 +19,87 @@ public class YogaClassController : ControllerBase
         _yogaClassService = yogaClassService;
     }
 
-    // Get classes belonging to a trainer's yoga program.
+    // Customers can view active classes.
+    // Trainers can view classes belonging to their own programs.
     [HttpGet("program/{programId:int}")]
-    public async Task<ActionResult<IReadOnlyList<YogaClassResponse>>> GetByProgramId(
-        int programId)
+    public async Task<ActionResult<IReadOnlyList<YogaClassResponse>>>
+        GetByProgramId(int programId)
     {
-        var trainerIdValue = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (User.IsInRole("Trainer"))
+        {
+            var trainerIdValue =
+                User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        if (!int.TryParse(trainerIdValue, out var trainerId))
-            return Unauthorized();
+            if (!int.TryParse(trainerIdValue, out var trainerId))
+                return Unauthorized();
 
-        var classes = await _yogaClassService.GetByProgramIdAsync(
-            trainerId, programId);
+            var trainerClasses = await _yogaClassService
+                .GetByProgramIdAsync(trainerId, programId);
 
-        return Ok(classes);
+            return Ok(trainerClasses);
+        }
+
+        if (User.IsInRole("Customer") || User.IsInRole("Admin"))
+        {
+            var availableClasses = await _yogaClassService
+                .GetAvailableByProgramIdAsync(programId);
+
+            return Ok(availableClasses);
+        }
+
+        return Forbid();
     }
 
-    // Get a specific class owned by the authenticated trainer.
+    // Customers can view active classes.
+    // Trainers can view only their own classes.
     [HttpGet("{id:int}")]
     public async Task<ActionResult<YogaClassResponse>> GetById(int id)
     {
-        var trainerIdValue = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (User.IsInRole("Trainer"))
+        {
+            var trainerIdValue =
+                User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        if (!int.TryParse(trainerIdValue, out var trainerId))
-            return Unauthorized();
+            if (!int.TryParse(trainerIdValue, out var trainerId))
+                return Unauthorized();
 
-        var yogaClass = await _yogaClassService.GetByIdAsync(trainerId, id);
+            var trainerClass = await _yogaClassService
+                .GetByIdAsync(trainerId, id);
 
-        if (yogaClass is null)
-            return NotFound();
+            if (trainerClass is null)
+                return NotFound();
 
-        return Ok(yogaClass);
+            return Ok(trainerClass);
+        }
+
+        if (User.IsInRole("Customer") || User.IsInRole("Admin"))
+        {
+            var availableClass = await _yogaClassService
+                .GetAvailableByIdAsync(id);
+
+            if (availableClass is null)
+                return NotFound();
+
+            return Ok(availableClass);
+        }
+
+        return Forbid();
     }
 
-    // Create a class under a program owned by the authenticated trainer.
+    // Only Trainers and Admins can create classes.
     [Authorize(Roles = "Trainer,Admin")]
     [HttpPost]
     public async Task<ActionResult<YogaClassResponse>> Create(
         [FromBody] CreateYogaClassRequest request)
     {
-        var trainerIdValue = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var trainerIdValue =
+            User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         if (!int.TryParse(trainerIdValue, out var trainerId))
             return Unauthorized();
 
-        var yogaClass = await _yogaClassService.CreateAsync(trainerId, request);
+        var yogaClass = await _yogaClassService
+            .CreateAsync(trainerId, request);
 
         return CreatedAtAction(
             nameof(GetById),
@@ -70,20 +107,21 @@ public class YogaClassController : ControllerBase
             yogaClass);
     }
 
-    // Update a class owned by the authenticated trainer.
+    // Only Trainers and Admins can update classes.
     [Authorize(Roles = "Trainer,Admin")]
     [HttpPut("{id:int}")]
     public async Task<ActionResult<YogaClassResponse>> Update(
         int id,
         [FromBody] UpdateYogaClassRequest request)
     {
-        var trainerIdValue = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var trainerIdValue =
+            User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         if (!int.TryParse(trainerIdValue, out var trainerId))
             return Unauthorized();
 
-        var yogaClass = await _yogaClassService.UpdateAsync(
-            trainerId, id, request);
+        var yogaClass = await _yogaClassService
+            .UpdateAsync(trainerId, id, request);
 
         if (yogaClass is null)
             return NotFound();
@@ -91,17 +129,19 @@ public class YogaClassController : ControllerBase
         return Ok(yogaClass);
     }
 
-    // Delete a class owned by the authenticated trainer.
+    // Only Trainers and Admins can delete classes.
     [Authorize(Roles = "Trainer,Admin")]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var trainerIdValue = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var trainerIdValue =
+            User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         if (!int.TryParse(trainerIdValue, out var trainerId))
             return Unauthorized();
 
-        var deleted = await _yogaClassService.DeleteAsync(trainerId, id);
+        var deleted = await _yogaClassService
+            .DeleteAsync(trainerId, id);
 
         if (!deleted)
             return NotFound();

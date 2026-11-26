@@ -7,6 +7,9 @@ public interface IScheduleService
     // Retrieve schedules belonging to a trainer's yoga class.
     Task<IReadOnlyList<ScheduleResponse>> GetByYogaClassIdAsync(int trainerId, int yogaClassId);
 
+    // Retrieve active, upcoming schedules for customers.
+    Task<IReadOnlyList<ScheduleResponse>> GetAvailableByYogaClassIdAsync(int yogaClassId);
+
     // Retrieve a schedule by its ID.
     Task<ScheduleResponse?> GetByIdAsync(int trainerId, int id);
 

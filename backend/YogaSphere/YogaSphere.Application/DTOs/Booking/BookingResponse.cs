@@ -13,8 +13,8 @@ namespace YogaSphere.Application.DTOs.Booking
         public int YogaClassId { get; set; }
         public string YogaClassName { get; set; } = string.Empty;
         public DateTime ClassDate { get; set; }
-        public TimeSpan StartTime { get; set; }
-        public TimeSpan EndTime { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
 
         public BookingStatus Status { get; set; }
         public DateTime BookingDate { get; set; }

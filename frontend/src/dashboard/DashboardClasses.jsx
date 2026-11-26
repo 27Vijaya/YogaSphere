@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import request from "../services/api";
 import "./DashboardClasses.css";
 
@@ -7,15 +8,14 @@ function DashboardClasses() {
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  // Program ID 4 has existing class data.
-  // We'll make this dynamic when we add program selection.
-  const programId = 4;
+  const { programId } = useParams();
 
   // Fetch classes belonging to the selected program
   useEffect(() => {
     async function loadClasses() {
       try {
+        setLoading(true);
+        setError("");
         const data = await request(
           `/YogaClass/program/${programId}`
         );
@@ -32,7 +32,7 @@ function DashboardClasses() {
     }
 
     loadClasses();
-  }, []);
+  }, [programId]);
 
   return (
     <div className="dashboard-classes">

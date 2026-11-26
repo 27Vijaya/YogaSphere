@@ -156,19 +156,31 @@ namespace YogaSphere.Infrastructure.Services
             return true;
         }
 
-        // Maps the database entity to the API response DTO.
+
+        // Maps the booking entity and its related schedule/class details to the API response.
         private static BookingResponse MapToResponse(Booking booking)
         {
+            var schedule = booking.Schedule;
+
             return new BookingResponse
             {
                 Id = booking.Id,
                 CustomerId = booking.CustomerId,
                 ScheduleId = booking.ScheduleId,
+
+                // Include yoga class details when the schedule and class exist.
+                YogaClassId = schedule?.YogaClassId ?? 0,
+                YogaClassName = schedule?.YogaClass?.Name ?? "Class details unavailable",
+                ClassDate = schedule?.StartTime.Date ?? default,
+                StartTime = schedule?.StartTime ?? default,
+                EndTime = schedule?.EndTime ?? default,
+
                 Status = booking.Status,
                 BookingDate = booking.BookingDate,
                 CancelledAt = booking.CancelledAt,
                 CreatedAt = booking.CreatedAt
             };
         }
+
     }
 }

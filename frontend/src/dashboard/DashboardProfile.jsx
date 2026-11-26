@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import request from "../services/api";
+import "./DashboardProfile.css";
 
 function DashboardProfile() {
   const [user, setUser] = useState(null);
@@ -23,7 +24,7 @@ function DashboardProfile() {
   }, []);
 
   if (loading) {
-    return <p>Loading your profile...</p>;
+    return <p className="profile-message">Loading your profile...</p>;
   }
 
   if (error) {
@@ -31,7 +32,7 @@ function DashboardProfile() {
   }
 
   if (!user) {
-    return <p>Profile information is unavailable.</p>;
+    return <p className="profile-message">Profile information is unavailable.</p>;
   }
 
   return (

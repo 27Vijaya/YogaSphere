@@ -1,13 +1,14 @@
 
 /* Yoga Classes page */
 .dashboard-classes h2 {
-  color: #245c46;
-  margin-bottom: 10px;
+  color: #173b38;
+  margin: 0 0 10px;
 }
 
 .dashboard-classes > p {
   color: #66736c;
   margin-bottom: 25px;
+  line-height: 1.6;
 }
 
 /* Responsive class card layout */
@@ -19,45 +20,55 @@
 }
 
 .class-card {
-  background: #f5f7f6;
+  background: #ffffff;
   border: 1px solid #e1e9e4;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 22px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .class-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px);
+  box-shadow: 0 7px 20px rgba(18, 60, 58, 0.08);
 }
 
 .class-card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 15px;
 }
 
 .class-card h3 {
-  color: #245c46;
+  color: #173b38;
   margin: 0;
+  font-size: 19px;
 }
 
 .class-description {
   color: #66736c;
+  line-height: 1.6;
   margin-bottom: 20px;
+  min-height: 48px;
+}
+
+.class-info {
+  border-top: 1px solid #edf1ee;
+  padding-top: 12px;
 }
 
 .class-info p {
-  color: #444;
-  margin: 8px 0;
+  color: #46534c;
+  margin: 9px 0;
+  font-size: 14px;
 }
 
 .active-status,
 .inactive-status {
   font-size: 12px;
-  padding: 5px 9px;
+  font-weight: 600;
+  padding: 5px 10px;
   border-radius: 20px;
   white-space: nowrap;
 }
@@ -72,6 +83,13 @@
   background: #fce4e4;
 }
 
+.error-message {
+  color: #b42318;
+  background: #fff0ef;
+  border-radius: 8px;
+  padding: 12px 15px;
+}
+
 @media (max-width: 900px) {
   .class-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -81,5 +99,9 @@
 @media (max-width: 600px) {
   .class-list {
     grid-template-columns: 1fr;
+  }
+
+  .class-card {
+    padding: 18px;
   }
 }

@@ -42,6 +42,48 @@ public class YogaClassService : IYogaClassService
         return classes.Select(MapToResponse).ToList();
     }
 
+
+    // Retrieve active classes for customers.
+    public async Task<IReadOnlyList<YogaClassResponse>>
+        GetAvailableByProgramIdAsync(int yogaProgramId)
+    {
+        // Check whether the requested program exists and is active.
+        var program = await _yogaProgramRepository
+            .GetByIdAsync(yogaProgramId);
+
+        if (program is null || !program.IsActive)
+            return Array.Empty<YogaClassResponse>();
+
+        // Retrieve classes belonging to this program.
+        var classes = await _yogaClassRepository
+            .GetByProgramIdAsync(yogaProgramId);
+
+        // Customers should only see active classes.
+        return classes
+            .Where(yogaClass => yogaClass.IsActive)
+            .Select(MapToResponse)
+            .ToList();
+    }
+
+    // Retrieve one active class for customers.
+    public async Task<YogaClassResponse?> GetAvailableByIdAsync(int id)
+    {
+        var yogaClass = await _yogaClassRepository.GetByIdAsync(id);
+
+        if (yogaClass is null || !yogaClass.IsActive)
+            return null;
+
+        // Ensure the class belongs to an active program.
+        var program = await _yogaProgramRepository
+            .GetByIdAsync(yogaClass.YogaProgramId);
+
+        if (program is null || !program.IsActive)
+            return null;
+
+        return MapToResponse(yogaClass);
+    }
+
+
     // Retrieve a class only if it belongs to the trainer's program.
     public async Task<YogaClassResponse?> GetByIdAsync(
         int trainerId, int id)

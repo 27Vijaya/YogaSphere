@@ -27,6 +27,28 @@ public class YogaProgramService : IYogaProgramService
         return programs.Select(MapToResponse).ToList();
     }
 
+    // Retrieve only programs owned by the authenticated trainer.
+    public async Task<IReadOnlyList<YogaProgramResponse>> GetMyProgramsAsync(
+        int trainerId)
+    {
+        // Convert authenticated user ID into TrainerProfile ID.
+        var trainerProfile = await _trainerProfileRepository
+            .GetByUserIdAsync(trainerId);
+
+        // Return an empty list if the trainer profile does not exist.
+        if (trainerProfile is null)
+        {
+            return Array.Empty<YogaProgramResponse>();
+        }
+
+        // Retrieve programs using TrainerProfile ID.
+        var programs = await _yogaProgramRepository
+            .GetByTrainerIdAsync(trainerProfile.Id);
+
+        // Convert domain entities into response DTOs.
+        return programs.Select(MapToResponse).ToList();
+    }
+
     // Retrieve one program by its ID.
     public async Task<YogaProgramResponse?> GetByIdAsync(int id)
     {

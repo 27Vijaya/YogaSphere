@@ -27,6 +27,25 @@ public class YogaProgramController : ControllerBase
         return Ok(programs);
     }
 
+    // Get programs belonging to the authenticated trainer.
+    [Authorize(Roles = "Trainer")]
+    [HttpGet("my-programs")]
+    public async Task<ActionResult<IReadOnlyList<YogaProgramResponse>>> GetMyPrograms()
+    {
+        // Read the authenticated user's ID from the JWT.
+        var trainerIdValue = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (!int.TryParse(trainerIdValue, out var trainerId))
+        {
+            return Unauthorized();
+        }
+
+        // Retrieve only this trainer's programs.
+        var programs = await _yogaProgramService.GetMyProgramsAsync(trainerId);
+
+        return Ok(programs);
+    }
+
     // Get a specific yoga program by ID.
     [HttpGet("{id:int}")]
     public async Task<ActionResult<YogaProgramResponse>> GetById(int id)

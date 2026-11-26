@@ -78,6 +78,38 @@ public class ScheduleService : IScheduleService
         return schedules.Select(MapToResponse).ToList();
     }
 
+    // Retrieve active, upcoming schedules that customers can book.
+    public async Task<IReadOnlyList<ScheduleResponse>>
+        GetAvailableByYogaClassIdAsync(int yogaClassId)
+    {
+        // Get the selected yoga class.
+        var yogaClass = await _yogaClassRepository.GetByIdAsync(yogaClassId);
+
+        // Do not expose schedules for inactive or missing classes.
+        if (yogaClass is null || !yogaClass.IsActive)
+            return Array.Empty<ScheduleResponse>();
+
+        // Verify that the parent yoga program is active.
+        var program = await _yogaProgramRepository
+            .GetByIdAsync(yogaClass.YogaProgramId);
+
+        if (program is null || !program.IsActive)
+            return Array.Empty<ScheduleResponse>();
+
+        // Retrieve schedules belonging to this yoga class.
+        var schedules = await _scheduleRepository
+            .GetByYogaClassIdAsync(yogaClassId);
+
+        // Customers can see only active schedules starting in the future.
+        return schedules
+            .Where(schedule =>
+                schedule.IsActive &&
+                schedule.StartTime > DateTime.UtcNow)
+            .OrderBy(schedule => schedule.StartTime)
+            .Select(MapToResponse)
+            .ToList();
+    }
+
     // Retrieve a schedule only if its class belongs to the trainer.
     public async Task<ScheduleResponse?> GetByIdAsync(
         int trainerId, int id)

@@ -16,15 +16,20 @@ namespace YogaSphere.Infrastructure.Repositories
         }
 
         // Retrieves all bookings belonging to a customer.
+
+        // Retrieves customer bookings together with their schedule and yoga class details.
         public async Task<IReadOnlyList<Booking>> GetByCustomerIdAsync(
             int customerId)
         {
             return await _context.Bookings
                 .AsNoTracking()
+                .Include(booking => booking.Schedule)
+                    .ThenInclude(schedule => schedule!.YogaClass)
                 .Where(booking => booking.CustomerId == customerId)
                 .OrderByDescending(booking => booking.CreatedAt)
                 .ToListAsync();
         }
+
 
         // Retrieves a booking using its ID.
         public async Task<Booking?> GetByIdAsync(int id)
