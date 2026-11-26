@@ -1,5 +1,11 @@
 # YogaSphere – Yoga Studio Management System
 
+> **Project Status: In Development**
+>
+> YogaSphere is an actively developed full-stack
+> yoga studio management application and portfolio project.
+> Features and documentation are being improved continuously.
+
 A full-stack yoga studio management application built using **ASP.NET Core Web API, C#, Entity Framework Core, SQL Server, and React**.
 
 YogaSphere is designed to manage yoga programs, classes, schedules, customer bookings, payments, and trainer activities through a role-based application.
